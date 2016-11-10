@@ -1,0 +1,99 @@
+
+
+{% load staticfiles %}
+
+
+
+{% load el_pagination_tags %}
+{% lazy_paginate 5 all_posts %}
+
+
+
+{% for post in all_posts %}
+
+<div class="row" style="margin: 5px 0px 5px 0px; border-bottom: 1px solid; border-color:#e7e7e7; padding-bottom:10px;">
+	<a href="{% url 'home:Post_view' post.id %}"><h4 class="visible-xs" style="font-family:Raleway;color: #323E4E;font-weight:bolder">{{ post.Title }}</h4></a><a href="{% url 'home:Post_view' post.id %}"><h2 class="hidden-xs" style="font-family:Raleway;color: #323E4E; font-weight:bolder">{{ post.Title }}</h2></a>
+		<span class="glyphicon glyphicon-calendar" style="color: #323E4E;padding-top:5px;padding-bottom:20px" aria-hidden="true"></span>
+		<a href=" ">{{post.Post_date}}	</a>| 
+			<span class="glyphicon glyphicon-user" style="color: #323E4E" aria-hidden="true"></span>
+		{% for profile in all_profiles %}
+			{% if profile.id == post.Profile_id_id %}
+		<a href=" ">{{profile.Name}}	</a>
+			{% endif %}
+		{% endfor %}
+		<p>{{ post.Post_short|linebreaks }}</p>
+	<div class="col-sm-8 col-xs-12" style="background-color:white;">
+		<a href="#" data-toggle="modal" data-target="#{{ post.pk }}" class="visible-xs" style="padding:0px;"><img class="visible-xs" src= "{{ post.Main_img }}" alt="Image not found" style="display:block; margin-left: auto; margin-right: auto;max-width: 100%; max-height: 100%" >
+		<div class="hidden-xs" style="display:table-cell; vertical-align:middle;text-align:center;width:480px;height: 400px; border: 1px solid; border-color:#cce6ff;">
+		<a href="#" data-toggle="modal" data-target="#{{ post.pk }}" class="hidden-xs" style="padding:0px;"><img class="hidden-xs" src="{{ post.Main_img }}"  style="display:block; margin-left: auto; margin-right: auto;background-size:cover;background-position:50% 50%;max-height:400px ;max-width: 100%;padding:0px"></a></div>
+		<span class="glyphicon glyphicon-folder-open" style="color: #323E4E;padding-top:20px;padding-bottom:20px" aria-hidden="true"></span>
+		{% for k,v in post_tag %} {% if k == post.id %} {% if v == 1 %}<a href="/Ubermensch " style="padding-left:3px"> Übermensch {% elif v == 2 %}<a href="/Pensamientos " style="padding-left:3px"> Pensamientos {% elif v == 3 %}<a href="/Historias" style="padding-left:3px">Historias {% elif v == 4 %}<a href="/Ciencia" style="padding-left:3px">Ciencia & Tecnologia {% endif %}{% endif %} {% endfor %} </a> <a href="{% url 'home:Post_view' post.id %}"class="pull-right" style="padding-top:20px;padding-bottom:20px">Leave Comment</a>
+		</div>
+</div>
+					<div class="modal fade" id="{{ post.pk }}"" tabindex="-1" role="dialog" aria-labelledby="{{ post.pk }}">
+  						<div class="modal-dialog" role="document">
+    						<div class="modal-content">
+      							<div class="modal-header">
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        							<h4 class="modal-title" id="myModalLabel">{{ post.Title }}</h4>
+      							</div>
+      							<div class="modal-body">
+        							{{ post.Post_content|linebreaks }}
+      							</div>
+      							<div class="modal-footer">
+        							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      							</div>
+    						</div>
+  						</div>
+					</div>
+
+{% endfor %}
+{% get_pages %}
+<ul class="pagination" style="margin-right:15%; margin-left:15%">
+{% if pages.paginated %}
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.first.path }}" aria-label="First">
+      <span aria-hidden="true">&lt;&lt;</span>
+      <span class="sr-only">First</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous">
+      <span aria-hidden="true">&lt;</span>
+      <span class="sr-only">Previous</span>
+    </a>
+  </li>
+  {% for page in pages %}
+    {% if page == None %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="...">
+          <span aria-hidden="true">...</span>
+          <span class="sr-only">...</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item {% if page.is_current %} active {% endif %}">
+        <a class="page-link" href="{{ page.path }}" aria-label="Page {{page.number}}">
+          <span aria-hidden="true">{{ page.label|safe }}</span>
+          <span class="sr-only">Page {{page.number}}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.next.path }}" aria-label="Next">
+      <span aria-hidden="true">&gt;</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.last.path }}" aria-label="Last">
+      <span aria-hidden="true">&gt;&gt;</span>
+      <span class="sr-only">Last</span>
+    </a>
+  </li>
+{% endif %}
+</ul>
+
+
+

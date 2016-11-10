@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	
+	<title>Top Seleccion</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" type = "text/css"/>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+	<link href="https://fonts.googleapis.com/css?family=Denk+One" rel="stylesheet">
+	<link rel="stylesheet" id="plane-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C500%2C700%2C900%7CNoto+Serif%3A400%2C700%2C400italic%2C700italic&amp;subset=latin%2Clatin-ext&amp;ver=4.6.1-RC1-38499" type="text/css" media="all">
+	  <link rel="stylesheet" href="{% static 'home/css/styles.css' %}" type = "text/css">
+</head>
+
+
+<body style="background-color:#e7e7e7">
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="padding-bottom: 0px; background-color:#323E4E">
+		<div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header" style="padding-left: 15%;">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'home:index' %}">Inicio</a>
+			</div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="/Ubermensch">Übermensch</a></li>
+				<li><a href="/Pensamientos">Pensamientos</a></li>
+				<li><a href="/Historias">Historias</a></li>
+				<li><a href="/Ciencia">Ciencia & Tecnologia</a></li>
+				<li><a href="/Acerca de">Acerca de</a></li>
+				<li><a href="/Contacto">Contacto</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right" style="padding-right:20%;">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						<span class="glyphicon glyphicon-search"></span>
+					</a>
+					<ul class="dropdown-menu" style="width:315px">
+						<li>      
+							<form id="search-form" action="/search/" method="GET" class="navbar-form">
+							{% csrf_token %}
+								<div class="input-group">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit" onclick="submit">Go!</button>
+									</span>
+										{{ Search_form.search_field }}
+								</div><!-- /input-group -->
+
+							</form>
+						</li>
+					</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	<!-- First navbar-->
+
+	<div style="background-color:#fdfdfd; margin-top:55px;" >
+
+		<div class="row row-eq-height" style="background-color: #BED4DF">
+			<div class="col-sm-2 ">
+			</div>
+			<div class="col-sm-8 col-xs-12">
+			</div>
+			<div class="col-sm-2 ">
+				 <a class="navbar-brand" href="#"><img src="{% static 'images/White-r.png'%}" style="display:block;height:100%;margin-top:0px"></a>
+			</div>
+		</div>
+
+		<div class="row row-eq-height" style="background-color: #BED4DF">
+			<div class="col-sm-2 hidden-xs">
+			</div>
+			<div class="col-sm-8 col-xs-12">
+				<img src="{% static 'images/Brain_3.png'%}" style="margin-right:30%; margin-left: 13%;text-align:center; width:75%;margin-bottom:-5%; margin-top:-9%">
+			</div>
+			<div class="col-sm-2 hidden-xs">
+			</div>
+		</div>
+
+<!--      -->
+		<div class="row row-eq-height" style="background-color: #BED4DF;border-bottom: 2px solid; border-color:white;">
+			<div class="col-sm-2 hidden-xs">
+				<h6 style="color:white;margin:0px 0px 2px 40px">"ελευθέρωσε το μυαλό σου"</h6>
+			</div>
+			<div class="col-sm-8 col-xs-12">
+
+		</div>
+		<div class="col-sm-2 hidden-xs">
+				<h6 style="color:white;margin:0px 0px 2px 40px">{{ Today }}</h6>
+			</div>
+	</div>
+	
+	
+{% if messages %}
+<div id="messages" class ='row'>
+	<div class='col-xs-12'>
+
+    		{% for message in messages %}
+    		{% if message.tags == "success" %} <p class="aler alert-success"
+style="text-align:center; padding-top: 10px; padding-bottom: 10px;margin-top:-20px"> {{ message }}{% endif %}{% if message.tags == "error" %}<p class="aler alert-danger"
+style="text-align:center; padding-top: 10px; padding-bottom: 10px;margin-top:-20px">{{ message }}{% endif %}
+
+        	<!--{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}-->
+    		</li>
+    	{% endfor %}
+
+	</div>
+</div>
+{% endif %}
+
+	<div class="container bs-docs-container" style="height:auto;background-color: white">
+		<div class="row">
+			
+		{% block content %}
+		{% endblock %}	
+		
+		</div>
+	</div>
+	
+
+<div class="footer">
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-5 widget">
+        	    <h2>Articulos Recientes</h2>
+                <article class="widget_content">
+    					{% for t in top %}
+					<ul>
+						<li style="margin-top:-10px"><a>{{t}}</a></li>
+					</ul>
+					{% endfor %}
+                 </article>
+    		</div>
+            <div class="col-md-3 widget">
+        	    <h2>Link</h2>
+                <article class="widget_content">
+                    <ul>
+                        <li><a href="https://www.facebook.com/loswax">Wax!</a></li>
+                        <li><a href="{% url 'home:acerca' %}">Acerca de</a></li>
+                        <li><a href="{% url 'home:contacto' %}">Contacto</a></li>
+                        <li><a href="https://www.pythoneverywhere.com">pythoneverywhere.com</a></li>
+                 </ul>
+                 </article>
+    		</div>
+            <div class="col-md-4 widget">
+                <h2>Donaciones</h2>
+                <article class="widget_content">
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+						<input type="hidden" name="cmd" value="_s-xclick">
+						<input type="hidden" name="hosted_button_id" value="AMA7SXPZ3S8AS">
+						<input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+						<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+						<img alt="" border="0" src="{% static 'qr.png' %}" width="70" height="70" style="margin-top:-20px">
+					</form>
+
+                    <p>bitcoin:1L9Bg3yF1p3xJYCddn7zxNEH86AMAge1fj</p>
+               
+                </article>
+    		</div>
+    	</div>
+    </div>
+</div>
+<div class="footer-bottom">
+    <div class="container">
+        <div class="row">
+    		<div class="col-md-12 widget">© 2014 | Created with Boostrap <span class="pull-right">Minimize your browser »</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block js %}
+    {{ block.super }}
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{% static 'home/js/bootstrap.min.js' %}">
+	</script>
+	<script async defer data-pin-hover="true" data-pin-round="true" data-pin-save="false" src="//assets.pinterest.com/js/pinit.js"></script>
+
+{% endblock %}
+	
+</body>
+
+</html>
+
+

@@ -1,0 +1,128 @@
+
+{%load staticfiles %}
+
+{% block content %}
+
+
+	<!--<h1> Trending Topics </h1>-->
+	{% for p in post %}
+
+
+
+
+	<!--MAIN DIV -->
+
+
+
+
+			<h1>{{ p.Title }}</h1>
+			<p style="font-size:12px; color:gray"> Post score: {{p.Post_score}} - Comments: {{ p.Post_comment_num }} </p>
+<!--UPVOTE-->
+
+
+	<!--ENDOFUPVOTE-->
+			<img class="visible-xs" src= "{{ p.Main_img }}" alt="Image not found" style="max-width: 100%; max-height: 100%" ></img>
+			<img class="hidden-xs center-block" src="{{ p.Main_img }}"  style="width: 480px; padding:0px;">
+			<p>{{ p.Post_content|linebreaks }}</p>
+
+	
+	<!--COMMENT SECTION-->
+
+
+				<ul class="media-list" style="margin-top:10px">
+				<h3 style="border-top: 1px solid; padding-top:20px;margin-top;20px; border-color:#e7e7e7;"> Comentarios: </h3>
+				{% for comment in all_comments %}
+
+				{% if comment.Post_id_id == p.id %}
+  					<li class="media" style="margin-bottom:-18px">
+    					<div class="media-left">
+      						<a href="#">
+								<img class="media-object" src="{% static 'Selection_018.bmp' %}" style="width: 34px; height: 34px;" alt="">
+      						</a>
+    					</div>
+    					<div class="media-body">
+      						<h6 class="media-heading">{{ comment.Name }}</h6>
+      						<p style="font-size: 10px">{{ comment.body }} </p>
+							<a href="#p{{ comment.id }}" data-toggle="collapse" href="#p{{ comment.id }}" aria-expanded="False" aria-controls="collapseExample">
+									<p style="margin-top:-10px;font-size: 10px">Contestar</p> </a>
+									<div class="collapse" id="p{{ comment.id }}">
+  										<div class="well" style="background-color:#fdfdfd;padding: 0px">
+   											<form action="{% url 'home:Post_scomment' comment.id %}?next={{ request.get_full_path|urlencode  }}" method="post">
+												<h4>Contestar Comentario</h4>
+												{% csrf_token %}
+												<div style="padding:5px 0% 5px 	0%">{{ Scomment_form.s_comment }}</div>
+												<p>Ingrese su informacion o haga clic en un icono para iniciar sesion:</p>
+												<div style="padding:5px 40% 5px 10%">{{ Scomment_form.email }}</div>
+												<div style="padding:5px 40% 5px 10%">{{ Scomment_form.name }}</div>
+												<div style="padding:5px 40% 5px 10%">{{ Scomment_form.website }}</div>
+												<p>Le gustaria subscribirse y ser notificado cuando alguien conteste su comentario?</p>
+												<div style="padding:5px 40% 5px 10%">{{ Scomment_form.subscribe }}</div>
+
+												<button class="btn btn-info btn-sm pull-right" type="submit" style="margin-right:0px"><h5>Publicar Comentario</h5></button>
+				
+											</form>
+  										</div>
+									</div>		
+				{% for scomment in all_scomments %}
+				{% if comment.id == scomment.Comment_id_id %}
+						<ul class="media-list"><li class="media-list">							
+							<div class="media-left">
+      							<a href="#">
+        						<img class="media-object" src="{% static 'Selection_018.bmp' %}" style="width: 34px; height: 34px;" alt="">
+      							</a>
+    						</div>
+    						<div class="media-body">
+      							<h6 class="media-heading">{{ scomment.Name}}</h6>
+      							<p style="font-size: 10px">{{ scomment.body }} </p>
+    						</div>
+						</li></ul>
+						{% endif %}	
+					{% endfor %}	
+	
+    					</div>
+						
+					</li>
+			
+				{% endif %}
+
+				</ul>
+					{% endfor %}
+	<!--ENDOFCOMMENTS-->
+
+	<div style="margin-bottom:50 px;margin-top:50px;border-bottom: 1px solid;border-color:#e7e7e7;">
+		<a class="" href="#test" data-toggle="collapse" href="#p{{ p.id }}" aria-expanded="False" aria-controls="collapse" style="margin-right:5%;margin-top:10px;margin-bottom:10px">
+			<h4>Comentar</h4>
+		</a>
+	</div>
+	<div class="collapse" id="test">
+	 <div class="well" style="background-color:#fdfdfd;padding: 0px">
+   											<form id="XPostVcommentX{{p.id}}YnextZX" action="{% url 'home:Post_comment' p.id %}?next={{ request.get_full_path|urlencode  }}" method="post" style="padding-right: 30px; padding-bottom:30px">
+												<h4>Comentar</h4>
+												{% csrf_token %}
+												<div style="padding:5px 0% 5px 	0%">{{ Pcomment_form.p_comment }}</div>
+												<p>Ingrese su informacion o haga clic en un icono para iniciar sesion:</p>
+												<div style="padding:5px 40% 5px 10%">{{ Pcomment_form.email }}</div>
+												<div style="padding:5px 40% 5px 10%">{{ Pcomment_form.name }}</div>
+												<div style="padding:5px 40% 5px 10%">{{ Pcomment_form.website }}</div>
+												<p>Le gustaria subscribirse y ser notificado cuando alguien conteste su comentario?</p>
+												<div style="padding:5px 40% 5px 10%">{{ Pcomment_form.subscribe }}</div>
+
+												<button class="btn btn-info btn-sm pull-right" style="margin-right:0px" type="submit"><h5>Publicar Comentario</h5></button>
+				
+											</form>
+  										</div>
+	</div>
+
+
+	{% endfor %}
+	<!--EOMAINDIV-->
+
+
+
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,93 @@
+{% extends "home/header.html" %}
+{%load staticfiles %}
+
+{% block content %}
+	<!--<h1> Trending Topics </h1>-->
+
+
+
+
+	<!--MAIN DIV -->
+
+		<div class="col-sm-8 col-xs-12 " style="background-color:white;">
+			<!--<ul class="nav nav-tabs">
+			{% if TAG == '' %}
+  			<li role="presentation"><a href="/Hot">Hot</a></li>
+ 			<li role="presentation"><a href="/Trending">Trending</a></li>
+			{% else %}
+  			<li role="presentation"><a href="/{{TAG}}/Hot">Hot</a></li>
+ 			<li role="presentation"><a href="/{{TAG}}/Trending">Trending</a></li>
+			{% endif %}
+	
+		</ul>-->
+<!------------------------------------------------------------>	
+		{% include page_template %}
+<!-------------------------------------------------------------->
+
+		</div>
+
+	<!--EOMAINDIV-->
+
+	<!--SIDEBAR-->
+
+		<div class="col-sm-4 hidden-xs " style="background-color:white;">	
+			<div class="row" style="background-color:#f9f9f9;margin: 28px 0px 5px 0px; border-bottom: 1px solid; border-color:#e7e7e7; padding-bottom:10px;">
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9; border-bottom: 5px solid; border-color:#e7e7e7; padding-bottom:0px;"><h4 style="font-family:Raleway;color: #323E4E;font-weight:bolder">Noticias</h4>
+				</div>
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9;">
+					<p>We are currently working to give you the best experience possible. Please be pasient</p>
+				</div>
+			</div>	
+			<div class="row" style="background-color:#f9f9f9;margin: 28px 0px 5px 0px; border-bottom: 1px solid; border-color:#e7e7e7; padding-bottom:10px;">
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9; border-bottom: 5px solid; border-color:#e7e7e7; padding-bottom:0px;"><h4 style="font-family:Raleway;color: #323E4E;font-weight:bolder">Social</h4>
+				</div>
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9;">
+					<div>
+						<a href="[full link to your Twitter]">
+							<img title="Twitter" alt="Twitter" src="{% static 'images/Twitter.png'%}" width="35" height="35" />
+						</a>
+						<a href="[full link to your Pinterest]">
+							<img title="Pinterest" alt="Pinterest" src="{% static 'images/Pinterest.png'%}" width="35" height="35" />
+						</a>
+						<a href="[full link to your Facebook page]">
+							<img title="Facebook" alt="Facebook" src="{% static 'images/Facebook.png'%}" width="35" height="35" />
+						</a>
+						<a href="[full link to your LinkedIn]">
+							<img title="LinkedIn" alt="LinkedIn" src="{% static 'images/Linkedin.png'%}" width="35" height="35" />
+						</a>
+						<a href="[full link to your Instagram]">
+							<img title="Instagram" alt="RSS" src="{% static 'images/Instagram.png'%}" width="35" height="35" />
+						</a>
+				</div>
+				</div>
+			</div>
+			<div class="row" style="background-color:#f9f9f9;margin: 28px 0px 5px 0px; border-bottom: 1px solid; border-color:#e7e7e7; padding-bottom:10px;">
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9; border-bottom: 5px solid; border-color:#e7e7e7; padding-bottom:0px;"><h4 style="font-family:Raleway;color: #323E4E;font-weight:bolder">Articulos Populares</h4>
+				</div>
+				<div style="margin:auto; width: 75% ;padding-top:10px;background-color:#f9f9f9;">
+					{% for t in top %}
+					<ul>
+						<li><a>{{t}}</a></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>	
+			<img src="{% static 'images/your-ad-here-500x500.jpg' %}" alt="face" 
+			style="max-width: 100%; max-height: 100%">
+			<div class="row" style="background-color:#f9f9f9;margin: 28px 0px 5px 0px; border-bottom: 1px solid; border-color:#e7e7e7; padding-bottom:10px;">
+				<div style="margin:auto; width: 75% ;background-color:#f9f9f9;"><script type="text/javascript" src="http://www.redbubble.com/assets/external_portfolio.js"></script>
+					<script id="rb-xzfcxvzx" type="text/javascript">new RBExternalPortfolio('www.redbubble.com', 'etor43', 1, 1).renderIframe();</script>
+				</div>
+			</div>	
+
+		</div>
+
+	<!--EOSIDEBAR-->
+
+
+
+
+{% endblock %}
+
+
+
